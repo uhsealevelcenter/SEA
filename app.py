@@ -56,13 +56,15 @@ class InterpreterError(Exception):
     pass
 
 today = date.today()
+root_path = "/sea-api"
 host = (
     "http://localhost"
     if os.getenv("LOCAL_DEV") == "1"
-    else "https://uhslc.soest.hawaii.edu/sea"
+    else "https://uhslc.soest.hawaii.edu/sea-api"
 )
 
-app = FastAPI(root_path="/sea-api")
+
+app = FastAPI(root_path=root_path)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.mount('/' + str(STATIC_DIR), StaticFiles(directory=STATIC_DIR), name="static")
